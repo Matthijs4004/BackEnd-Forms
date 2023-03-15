@@ -2,10 +2,17 @@
 $email = $name = ""; 
 $display = 'none';
 if( isset( $_POST[ 'submit' ] ) ) {
-    $name = $_POST[ 'name' ];
-    $email = $_POST[ 'email' ];
+    $name = testInput( $_POST[ 'name' ] );
+    $email = testInput( $_POST[ 'email' ] );
     $display = 'block';
 }    
+
+function testInput( $data ) 
+{
+    $data = trim( $data );
+    $data = stripslashes( $data );
+    return $data = htmlspecialchars( $data );
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +24,7 @@ if( isset( $_POST[ 'submit' ] ) ) {
     <title>Form</title>
 </head>
 <body>
-    <form action="welcome.php" method="post">
+    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
         <label for="name">Name</label><br>
         <input type="text" name="name" id="name"><br>
         <label for="email">Email</label><br>
