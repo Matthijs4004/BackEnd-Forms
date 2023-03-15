@@ -1,9 +1,22 @@
 <?php
-$email = $name = ""; 
+$email = $name = $nameRequired = $emailRequired = ""; 
 $display = 'none';
-if( isset( $_POST[ 'submit' ] ) ) {
-    $name = testInput( $_POST[ 'name' ] );
-    $email = testInput( $_POST[ 'email' ] );
+if( isset( $_POST[ 'submit' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == "POST" ) {
+    if ( empty( $_POST[ 'name' ] ) ) {
+        $nameRequired = "Name is required";
+    } else {
+        $name = testInput( $_POST[ 'name' ] );
+    }
+
+    if ( empty( $_POST[ 'email' ] ) ) {
+        $emailRequired = "Email is required";
+    } else {
+        $email = testInput( $_POST[ 'email' ] );
+        if ( !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+            $emailRequired = "Email is not a valid email address";
+        }
+    }
+
     $display = 'block';
 }    
 
@@ -26,9 +39,9 @@ function testInput( $data )
 <body>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
         <label for="name">Name</label><br>
-        <input type="text" name="name" id="name"><br>
+        <input type="text" name="name" id="name"><span style="color: red;"> * <?php echo $nameRequired; ?></span><br>
         <label for="email">Email</label><br>
-        <input type="email" name="email" id="email"><br>
+        <input type="text" name="email" id="email"><span style="color: red;"> * <?php echo $emailRequired; ?></span><br>
         <input type="submit" name="submit">
     </form><br>
     <div style="display: <?php echo $display; ?>;">
