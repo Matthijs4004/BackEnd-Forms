@@ -1,5 +1,35 @@
 <?php
-
+$noPet = $person = $country = $bored = $toy = $skipClass = $money = $hobby =  "";
+$formDisplay = "grid";
+$answerDisplay = "none";
+if ( $_SERVER[ 'REQUEST_METHOD' ] == "POST" ) {
+    if ( !empty( $_POST[ 'noPet' ] ) ) {
+        $noPet = testInput( $_POST[ 'noPet' ] );
+    }
+    if ( !empty( $_POST[ 'person' ] ) ) {
+        $person = testInput( $_POST[ 'person' ] );
+    }
+    if ( !empty( $_POST[ 'country' ] ) ) {
+        $country = testInput( $_POST[ 'country' ] );
+    }
+    if ( !empty( $_POST[ 'bored' ] ) ) {
+        $bored = testInput( $_POST[ 'bored' ] );
+    }
+    if ( !empty( $_POST[ 'toy' ] ) ) {
+        $toy = testInput( $_POST[ 'toy' ] );
+    }
+    if ( !empty( $_POST[ 'skipClass' ] ) ) {
+        $skipClass = testInput( $_POST[ 'skipClass' ] );
+    }
+    if ( !empty( $_POST[ 'money' ] ) ) {
+        $money = testInput( $_POST[ 'money' ] );
+    }
+    if ( !empty( $_POST[ 'hobby' ] ) ) {
+        $hobby = testInput( $_POST[ 'hobby' ] );
+    }
+    $formDisplay = "none";
+    $answerDisplay = "block";
+}
 ?>
 
 
@@ -26,7 +56,7 @@
             
             <main>
                 <h1>Er heerst paniek...</h1>
-                <form class="form" action="<?php echo htmlspecialchars( $_SERVER[ 'PHP_SELF' ] ); ?>" method="post">
+                <form style="display: <?php echo $formDisplay; ?>;" class="form" action="<?php echo htmlspecialchars( $_SERVER[ 'PHP_SELF' ] ); ?>" method="post">
                     <label for="noPet">Welk dier zou je nooit als huisdier willen hebben?</label>
                     <input type="text" name="noPet" id="noPet">
                     <label for="person">Wie is de belangrijkste persoon in je leven?</label>
@@ -46,6 +76,7 @@
                     <br>
                     <input type="submit" name="submit" id="submit" value="Verzenden">
                 </form>
+                <p style="display: <?php echo $answerDisplay; ?>;"></p>
             </main>
             <footer>
                 <p>&copy; Matthijs Raatgever 2023</p>

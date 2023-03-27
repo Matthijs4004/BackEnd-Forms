@@ -1,8 +1,41 @@
 <?php
+$ability = $person = $number = $vacation = $bestCharacteristic = $worstCharacteristic = $worstHappening =  "";
+$formDisplay = "grid";
+$answerDisplay = "none";
+if ( $_SERVER[ 'REQUEST_METHOD' ] == "POST" ) {
+    if ( !empty( $_POST[ 'ability' ] ) ) {
+        $ability = testInput( $_POST[ 'ability' ] );
+    }
+    if ( !empty( $_POST[ 'person' ] ) ) {
+        $person = testInput( $_POST[ 'person' ] );
+    }
+    if ( !empty( $_POST[ 'number' ] ) ) {
+        $number = testInput( $_POST[ 'number' ] );
+    }
+    if ( !empty( $_POST[ 'vacation' ] ) ) {
+        $vacation = testInput( $_POST[ 'vacation' ] );
+    }
+    if ( !empty( $_POST[ 'bestCharacteristic' ] ) ) {
+        $bestCharacteristic = testInput( $_POST[ 'bestCharacteristic' ] );
+    }
+    if ( !empty( $_POST[ 'worstCharacteristic' ] ) ) {
+        $worstCharacteristic = testInput( $_POST[ 'worstCharacteristic' ] );
+    }
+    if ( !empty( $_POST[ 'worstHappening' ] ) ) {
+        $worstHappening = testInput( $_POST[ 'worstHappening' ] );
+    }
+    $formDisplay = "none";
+    $answerDisplay = "block";
+}
+
+function testInput( $data ) 
+{
+    $data = trim( $data );
+    $data = stripslashes( $data );
+    return $data = htmlspecialchars( $data );
+}
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +59,7 @@
             
             <main>
                 <h1>Onkunde</h1>
-                <form class="form" action="<?php echo htmlspecialchars( $_SERVER[ 'PHP_SELF' ] ); ?>" method="post">
+                <form style="display: <?php echo $formDisplay; ?>;" class="form" action="<?php echo htmlspecialchars( $_SERVER[ 'PHP_SELF' ] ); ?>" method="post">
                     <label for="ability">Wat zou je graag willen kunnen?</label>
                     <input type="text" name="ability" id="ability">
                     <label for="person">Met welke persoon kun je goed opschieten?</label>
@@ -44,6 +77,7 @@
                     <br>
                     <input type="submit" name="submit" id="submit" value="Verzenden">
                 </form>
+                <p style="display: <?php echo $answerDisplay; ?>;">Er zijn veel mensen die niet kunnen <span><?php echo $ability; ?></span>. Neem nou <span><?php echo $person; ?></span>. Zelfs met de hulp van een <span><?php echo $vacation ?></span> of zelfs <span><?php echo $number; ?></span> kan <span><?php echo $person; ?></span> niet <span><?php echo $ability; ?></span>. Dat heet niet te maken met gebrek aan <span><?php echo $bestCharacteristic; ?></span>, maar met een te veel aan <span><?php echo $worstCharacteristic; ?></span>. Te veel <span><?php echo $worstCharacteristic; ?></span> leidt tot <span><?php echo $worstHappening; ?></span> en dat is niet goed als je wilt <span><?php echo $ability; ?></span>. Helaas voor <span><?php echo $person; ?></span></p>
             </main>
             <footer>
                 <p>&copy; Matthijs Raatgever 2023</p>

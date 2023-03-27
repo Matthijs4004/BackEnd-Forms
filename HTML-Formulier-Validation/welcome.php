@@ -4,20 +4,30 @@ $display = 'none';
 if( isset( $_POST[ 'submit' ] ) && $_SERVER[ 'REQUEST_METHOD' ] == "POST" ) {
     if ( empty( $_POST[ 'name' ] ) ) {
         $nameRequired = "Name is required";
+        $display = 'none';
     } else {
         $name = testInput( $_POST[ 'name' ] );
+        $display = 'block';
     }
 
     if ( empty( $_POST[ 'email' ] ) ) {
         $emailRequired = "Email is required";
+        $display = 'none';
     } else {
         $email = testInput( $_POST[ 'email' ] );
         if ( !filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
             $emailRequired = "Email is not a valid email address";
+            $display = 'none';
+        } else {
+            if ($nameRequired != "") {
+                $display = 'none';
+            } else {
+                $display = 'block';
+            }
         }
     }
 
-    $display = 'block';
+    //$display = 'block';
 }    
 
 function testInput( $data ) 
